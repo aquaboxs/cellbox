@@ -59,10 +59,10 @@ namespace xbox {
 	}
 
 	static DRIVER_OBJECT CdRomDriverObject = {
-		CdRomStartIo,
-		nullptr,
-		nullptr,
-		{
+		.DriverStartIo = CdRomStartIo,
+		.DriverDeleteDevice = nullptr,
+		.DriverUnknown2 = nullptr,
+		.MajorFunction = {
 			DriverIrpReturn,
 			DriverIrpReturn,
 			CdRomReadOnly,
@@ -114,6 +114,7 @@ void EmuCdRomSetup(std::filesystem::path CdRomPath, int BootFlags)
 	result = xbox::IoCreateSymbolicLink(&xDriveCdRom0, &xDeviceCdRom0);
 	EmuBugCheckInline(result);
 
+	// NOTE: below are incomplete reverse engineered, more research is needed to understand the initialization process.
 	CdRomDeviceObject->Flags |= 0x44; // TODO: What flags are these? Doesn't seem to match with ReactOS's info: https://github.com/reactos/reactos/blob/999345a4feaae1e74533c96fa2cdfa1bce50ec5f/sdk/include/xdk/iotypes.h
 
 	CdRomDeviceObject->AlignmentRequirement = 1;

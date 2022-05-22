@@ -63,14 +63,21 @@ void StrHashDereference(const std::size_t& StrHash)
 	}
 	const auto& it = g_HashStrings.find(StrHash);
 	if (it != g_HashStrings.end()) {
+		it->second.Counter--;
+		// If counter is zero, then erase it.
+		if (!it->second.Counter) {
+			g_HashStrings.erase(it);
+		}
 	}
 }
 
 void AttachStringToXboxObject(xbox::PVOID xobject, const std::string& string)
 {
-	using namespace xbox;
+	if (string.empty()) {
+		return;
+	}
 
-	std::unique_lock<std::shared_mutex> lck(g_MapMtx);
+	using namespace xbox;
 	POBJECT_HEADER ObjectHeader = OBJECT_TO_OBJECT_HEADER(xobject);
 	// Check if an object already has string.
 	if (ObjectHeader->Flags & OB_FLAG_NAMED_OBJECT) {
@@ -78,9 +85,7 @@ void AttachStringToXboxObject(xbox::PVOID xobject, const std::string& string)
 		return;
 	}
 
-	if (string.empty()) {
-		return;
-	}
+	std::unique_lock<std::shared_mutex> lck(g_MapMtx);
 
 	// Find existing xobject and attach string to them.
 	std::size_t StrHash = std::hash<std::string>{}(string);

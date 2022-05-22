@@ -1023,14 +1023,6 @@ xbox::ntstatus_xt NTAPI xbox::IopParseDevice(
 		CxbxDebugger::ReportFileOpened(FileHandle, nativeObjectAttributes.NtUnicodeString.Buffer, SUCCEEDED(result));
 	}
 
-#if 0 // Disabled
-	if (RemainingName->Length) {
-		EmuLog(LOG_LEVEL::DEBUG, "%s: %s\\%s", __func__, Object2Str(RelativeParseObject).c_str(), PSTRING_to_string(RemainingName).c_str());
-	}
-	else {
-		EmuLog(LOG_LEVEL::DEBUG, "%s: %s", __func__, Object2Str(RelativeParseObject).c_str());
-	}
-#endif
 	if (X_NT_SUCCESS(result)) {
 
 		// TODO: FileObject fields needs implement in driver's filesystem section. For now, ReadAccess/WriteAccess are not used.

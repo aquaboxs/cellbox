@@ -66,10 +66,10 @@ namespace xbox {
 	}
 
 	static DRIVER_OBJECT DiskDriverObject = {
-		DiskStartIo,
-		nullptr,
-		nullptr,
-		{
+		.DriverStartIo = DiskStartIo,
+		.DriverDeleteDevice = nullptr,
+		.DriverUnknown2 = nullptr,
+		.MajorFunction = {
 			DriverIrpReturn,
 			DriverIrpReturn,
 			DiskReadWrite,
@@ -234,11 +234,14 @@ bool EmuDiskFormatPartition(xbox::dword_xt PartitionNumber)
 		return false;
 	}
 
-	// Format the partition, by iterating through the contents and removing all files/folders within
+	// Format the disk's partition, by iterating through the contents and removing all files/folders within
 	// Previously, we deleted and re-created the folder, but that caused permission issues for some users
 	std::error_code er;
 	for (const auto& directoryEntry : std::filesystem::directory_iterator(partitionPath, er)) {
-		if (!er) {
+		if (er) {
+			EmuLog(LOG_LEVEL::ERROR2, "%s", er.message().c_str());
+		}
+		else {
 			std::filesystem::remove_all(directoryEntry, er);
 		}
 	}
@@ -285,6 +288,7 @@ void EmuDiskPartitionSetup(size_t partitionIndex, bool IsFile=false)
 	xbox::ntstatus_xt result = xbox::IoCreateDevice(&xbox::DiskDriverObject, sizeof(xbox::IDE_DISK_EXTENSION), nullptr, xbox::FILE_DEVICE_DISK2, FALSE, &DiskDeviceObject);
 	EmuBugCheckInline(result);
 
+	// NOTE: below are incomplete reverse engineered, more research is needed to understand the initialization process.
 	DiskDeviceObject->Flags |= 0x45; // TODO: What flags are these? Doesn't seem to match with ReactOS's info: https://github.com/reactos/reactos/blob/999345a4feaae1e74533c96fa2cdfa1bce50ec5f/sdk/include/xdk/iotypes.h
 
 	DiskDeviceObject->AlignmentRequirement = 1;
@@ -345,6 +349,7 @@ void EmuDiskSetup()
 	result = xbox::IoCreateDevice(&xbox::DiskDriverObject, sizeof(xbox::IDE_DISK_EXTENSION), nullptr, xbox::FILE_DEVICE_DISK2, FALSE, &DiskDeviceObject);
 	EmuBugCheckInline(result);
 
+	// NOTE: below are incomplete reverse engineered, more research is needed to understand the initialization process.
 	DiskDeviceObject->Flags |= 0x45; // TODO: What flags are these? Doesn't seem to match with ReactOS's info: https://github.com/reactos/reactos/blob/999345a4feaae1e74533c96fa2cdfa1bce50ec5f/sdk/include/xdk/iotypes.h
 
 	DiskDeviceObject->AlignmentRequirement = 1;
