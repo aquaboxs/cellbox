@@ -1448,25 +1448,26 @@ typedef struct _DUMMY_FILE_OBJECT
 // routine can know what operation is being requested.
 typedef struct _OPEN_PACKET
 {
-	cshort_xt                      Type;
-	cshort_xt                      Size;
-	PFILE_OBJECT                   FileObject;
-	ntstatus_xt                    FinalStatus;
-	ulong_ptr_xt                   Information;
-	ulong_xt                       ParseCheck;
-	PFILE_OBJECT                   RelatedFileObject;
-	LARGE_INTEGER                  AllocationSize;
-	ulong_xt                       CreateOptions;
-	ushort_xt                      FileAttributes;
-	ushort_xt                      ShareAccess;
-	ulong_xt                       Options;
-	ulong_xt                       Disposition;
-	ulong_xt                       DesiredAccess;
-	PFILE_NETWORK_OPEN_INFORMATION NetworkInformation;
-	PDUMMY_FILE_OBJECT             LocalFileObject;
-	boolean_xt                     QueryOnly;
-	boolean_xt                     DeleteOnly;
+	cshort_xt                      Type;               // 0x00
+	cshort_xt                      Size;               // 0x02
+	PFILE_OBJECT                   FileObject;         // 0x04
+	ntstatus_xt                    FinalStatus;        // 0x08
+	ulong_ptr_xt                   Information;        // 0x0C
+	ulong_xt                       ParseCheck;         // 0x10
+	PFILE_OBJECT                   RelatedFileObject;  // 0x14
+	LARGE_INTEGER                  AllocationSize;     // 0x18
+	ulong_xt                       CreateOptions;      // 0x20
+	ushort_xt                      FileAttributes;     // 0x24
+	ushort_xt                      ShareAccess;        // 0x26
+	ulong_xt                       Options;            // 0x28
+	ulong_xt                       Disposition;        // 0x2C
+	ulong_xt                       DesiredAccess;      // 0x30
+	PFILE_NETWORK_OPEN_INFORMATION NetworkInformation; // 0x34
+	PDUMMY_FILE_OBJECT             LocalFileObject;    // 0x38
+	boolean_xt                     QueryOnly;          // 0x3C
+	boolean_xt                     DeleteOnly;         // 0x3D
 } OPEN_PACKET, *POPEN_PACKET;
+static_assert(sizeof(OPEN_PACKET) == 0x40); // Except it is 0x3E size if pack(1)
 
 // ******************************************************************
 // * SHARE_ACCESS
@@ -2767,98 +2768,99 @@ typedef struct _IDE_CHANNEL_OBJECT
 } IDE_CHANNEL_OBJECT, *PIDE_CHANNEL_OBJECT;
 
 typedef struct _IO_STACK_LOCATION {
-	uchar_xt MajorFunction;
-	uchar_xt MinorFunction;
-	uchar_xt Flags;
-	uchar_xt Control;
+	uchar_xt MajorFunction;    // 0x00
+	uchar_xt MinorFunction;    // 0x01
+	uchar_xt Flags;            // 0x02
+	uchar_xt Control;          // 0x03
 
 	union {
 		struct {
-			dword_xt DesiredAccess;
-			ulong_xt Options;
-			ushort_xt FileAttributes;
-			ushort_xt ShareAccess;
-			POBJECT_STRING RemainingName;
+			dword_xt DesiredAccess;       // 0x04
+			ulong_xt Options;             // 0x08
+			ushort_xt FileAttributes;     // 0x0C
+			ushort_xt ShareAccess;        // 0x0E
+			POBJECT_STRING RemainingName; // 0x10
 		} Create;
 
 		struct {
-			ulong_xt Length;
-			ulong_xt Key;
-			LARGE_INTEGER ByteOffset;
+			ulong_xt Length;          // 0x04
+			ulong_xt Key;             // 0x08
+			LARGE_INTEGER ByteOffset; // 0x0C
 		} Read;
 
 		struct {
-			ulong_xt Length;
-			ulong_xt Key;
-			LARGE_INTEGER ByteOffset;
+			ulong_xt Length;          // 0x04
+			ulong_xt Key;             // 0x08
+			LARGE_INTEGER ByteOffset; // 0x0C
 		} Write;
 
 		struct {
-			ulong_xt Length;
-			PUNICODE_STRING FileName;
-			FILE_INFORMATION_CLASS FileInformationClass;
-			ulong_xt FileIndex;
+			ulong_xt Length;                             // 0x04
+			PUNICODE_STRING FileName;                    // 0x08
+			FILE_INFORMATION_CLASS FileInformationClass; // 0x0C
+			ulong_xt FileIndex;                          // 0x10
 		} QueryDirectory;
 
 		struct {
-			ulong_xt Length;
-			FILE_INFORMATION_CLASS FileInformationClass;
+			ulong_xt Length;                             // 0x04
+			FILE_INFORMATION_CLASS FileInformationClass; // 0x08
 		} QueryFile;
 
 		struct {
-			ulong_xt Length;
-			FILE_INFORMATION_CLASS FileInformationClass;
-			PFILE_OBJECT FileObject;
+			ulong_xt Length;                             // 0x04
+			FILE_INFORMATION_CLASS FileInformationClass; // 0x08
+			PFILE_OBJECT FileObject;                     // 0x0C
 			union {
 				struct {
-					boolean_xt ReplaceIfExists;
-					boolean_xt AdvanceOnly;
-				} DUMMYSTRUCTNAME;
-				ulong_xt ClusterCount;
-				HANDLE DeleteHandle;
-			} DUMMYUNIONNAME;
+					boolean_xt ReplaceIfExists; // 0x10
+					boolean_xt AdvanceOnly;     // 0x11
+				} DUMMYSTRUCTNAME;              // 0x10
+				ulong_xt ClusterCount;          // 0x10
+				HANDLE DeleteHandle;            // 0x10
+			} DUMMYUNIONNAME;                   // 0x10
 		} SetFile;
 
 		struct {
-			ulong_xt Length;
-			FS_INFORMATION_CLASS FsInformationClass;
+			ulong_xt Length;                         // 0x04
+			FS_INFORMATION_CLASS FsInformationClass; // 0x08
 		} QueryVolume;
 
 		struct {
-			ulong_xt Length;
-			FS_INFORMATION_CLASS FsInformationClass;
+			ulong_xt Length;                         // 0x04
+			FS_INFORMATION_CLASS FsInformationClass; // 0x08
 		} SetVolume;
 
 		struct {
-			ulong_xt OutputBufferLength;
-			ulong_xt InputBufferLength;
-			ulong_xt FsControlCode;
-			PVOID Type3InputBuffer;
+			ulong_xt OutputBufferLength; // 0x04
+			ulong_xt InputBufferLength;  // 0x08
+			ulong_xt FsControlCode;      // 0x0C
+			PVOID Type3InputBuffer;      // 0x10
 		} FileSystemControl;
 
 		struct {
-			ulong_xt OutputBufferLength;
-			ulong_xt InputBufferLength;
-			ulong_xt IoControlCode;
-			PVOID Type3InputBuffer;
+			ulong_xt OutputBufferLength; // 0x04
+			ulong_xt InputBufferLength;  // 0x08
+			ulong_xt IoControlCode;      // 0x0C
+			PVOID Type3InputBuffer;      // 0x10
 		} DeviceIoControl;
 
 		struct {
-			ulong_xt WhichSpace;
-			PVOID Buffer;
-			ulong_xt Offset;
-			ulong_xt Length;
+			ulong_xt WhichSpace; // 0x04
+			PVOID Buffer;        // 0x08
+			ulong_xt Offset;     // 0x0C
+			ulong_xt Length;     // 0x10
 		} ReadWriteConfig;
 
 		struct {
-			PVOID Argument1;
-			PVOID Argument2;
-			PVOID Argument3;
-			PVOID Argument4;
+			PVOID Argument1; // 0x04
+			PVOID Argument2; // 0x08
+			PVOID Argument3; // 0x0C
+			PVOID Argument4; // 0x10
 		} Others;
 
-	} Parameters;
+	} Parameters; // 0x04
 } IO_STACK_LOCATION, *PIO_STACK_LOCATION;
+static_assert(sizeof(IO_STACK_LOCATION) == 0x18);
 
 /* IO_STACK_LOCATION.Control */
 
@@ -2880,21 +2882,21 @@ typedef PVOID PFILE_SEGMENT_ELEMENT;
 // ******************************************************************
 typedef struct _IRP
 {
-	cshort_xt                 Type;                // 0x00
-	word_xt                   Size;                // 0x02
-	ulong_xt                  Flags;               // 0x04
+	cshort_xt              Type;                // 0x00
+	word_xt                Size;                // 0x02
+	ulong_xt               Flags;               // 0x04
 	LIST_ENTRY             ThreadListEntry;     // 0x08
 	IO_STATUS_BLOCK        IoStatus;            // 0x10
-	char_xt                   StackCount;          // 0x18
-	char_xt                   CurrentLocation;	    // 0x19
-	uchar_xt                  PendingReturned;     // 0x1A
-	uchar_xt                  Cancel;              // 0x1B
+	char_xt                StackCount;          // 0x18
+	char_xt                CurrentLocation;     // 0x19
+	uchar_xt               PendingReturned;     // 0x1A
+	uchar_xt               Cancel;              // 0x1B
 	PIO_STATUS_BLOCK       UserIosb;            // 0x1C
 	PKEVENT                UserEvent;           // 0x20
-	ulonglong_xt              Overlay;	            // 0x28
+	ulonglong_xt           Overlay;             // 0x28
 	PVOID                  UserBuffer;          // 0x30
 	PFILE_SEGMENT_ELEMENT  SegmentArray;        // 0x34
-	ulong_xt                  LockedBufferLength;  // 0x38
+	ulong_xt               LockedBufferLength;  // 0x38
 	union {
 		struct {
 			union {
@@ -2912,22 +2914,22 @@ typedef struct _IRP
 				};
 			};
 			struct _FILE_OBJECT* OriginalFileObject;
-		} Overlay;
+		} Overlay; // 0x3C
 		KAPC Apc;
 		PVOID CompletionKey;
-	}                      Tail;                // 0x3C
+	} Tail; // 0x3C
 }
 IRP, *PIRP;
 
 typedef struct _PARTITION_INFORMATION {
-	LARGE_INTEGER StartingOffset;
-	LARGE_INTEGER PartitionLength;
-	dword_xt HiddenSectors;
-	dword_xt PartitionNumber;
-	byte_xt PartitionType;
-	boolean_xt BootIndicator;
-	boolean_xt RecognizedPartition;
-	boolean_xt RewritePartition;
+	LARGE_INTEGER StartingOffset;   // 0x00
+	LARGE_INTEGER PartitionLength;  // 0x08
+	dword_xt HiddenSectors;         // 0x10
+	dword_xt PartitionNumber;       // 0x14
+	byte_xt PartitionType;          // 0x18
+	boolean_xt BootIndicator;       // 0x19
+	boolean_xt RecognizedPartition; // 0x1A
+	boolean_xt RewritePartition;    // 0x1B
 } PARTITION_INFORMATION, *PPARTITION_INFORMATION;
 
 typedef struct _IDE_DISK_EXTENSION {
