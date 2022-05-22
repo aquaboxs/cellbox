@@ -198,7 +198,7 @@ private:
 extern io_mu_metadata *g_io_mu_metadata;
 
 void CxbxrSetupDrives(std::filesystem::path& CdRomPath, int BootFlags);
-void CxbxCreatePartitionHeaderFile(std::string filename, bool partition0 = false, std::size_t size = 512 * ONE_KB);
+void CxbxCreatePartitionHeaderFile(const std::filesystem::path& filename, bool partition0 = false, std::size_t size = 512 * ONE_KB);
 
 std::string CxbxConvertXboxToHostPath(const std::string_view XboxDevicePath);
 bool CxbxrIsPathInsideEmuDisk(const std::filesystem::path& path);

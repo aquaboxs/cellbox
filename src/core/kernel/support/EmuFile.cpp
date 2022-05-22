@@ -183,11 +183,11 @@ bool CxbxrIsPathInsideEmuMu(const std::filesystem::path& path)
 	return CxbxrIsPathInsideRootPath(path, g_MuBasePath);
 }
 
-void CxbxCreatePartitionHeaderFile(std::string filename, bool partition0, std::size_t size)
+void CxbxCreatePartitionHeaderFile(const std::filesystem::path& filename, bool partition0, std::size_t size)
 {
-	HANDLE hf = CreateFile(filename.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, 0, 0);
+	HANDLE hf = CreateFileW(filename.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, 0, 0);
 	if (!hf) {
-		CxbxrAbort("CxbxCreatePartitionHeaderFile Failed\nUnable to create file: %s (%s)", filename.c_str());
+		CxbxrAbort("CxbxCreatePartitionHeaderFile Failed\nUnable to create file: %s (%s)", filename.u8string().c_str());
 		return;
 	}
 

@@ -107,7 +107,7 @@ void EmuCdRomSetup(std::filesystem::path CdRomPath, int BootFlags)
 	EmuBugCheckInline(result);
 
 
-	NtDll::HANDLE HostRootHandle = CreateFileA(CdRomPath.string().c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+	NtDll::HANDLE HostRootHandle = CreateFileW(CdRomPath.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
 	RegisterXboxObject(CdRomDeviceObject, HostRootHandle);
 	RegisterXboxObject<true>(CdRomDeviceObject, HostRootHandle);
 

@@ -269,11 +269,11 @@ void EmuDiskPartitionSetup(size_t partitionIndex, bool IsFile=false)
 	partitionPath.HostDevicePath = g_DiskBasePath + PartitionPrefix + partitionX;
 
 	bool succeeded{ true };
-	std::string partitionHeaderPath = partitionPath.HostDevicePath + ".bin";
+	std::filesystem::path partitionHeaderPath = partitionPath.HostDevicePath + ".bin";
 	if (!std::filesystem::exists(partitionHeaderPath)) {
 		CxbxCreatePartitionHeaderFile(partitionHeaderPath, partitionIndex == 0);
 	}
-	partitionPath.HostBinHandle = CreateFileA(partitionHeaderPath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+	partitionPath.HostBinHandle = CreateFileW(partitionHeaderPath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
 
 	// If this path is not a raw file partition, create the directory for it
 	if (!IsFile) {
