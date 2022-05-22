@@ -52,10 +52,10 @@ namespace xbox {
 	}
 
 	static DRIVER_OBJECT MuDriverObject = {
-		MuStartIo,
-		nullptr,
-		nullptr,
-		{
+		.DriverStartIo = MuStartIo,
+		.DriverDeleteDevice = nullptr,
+		.DriverUnknown2 = nullptr,
+		.MajorFunction = {
 			IoInvalidDeviceRequest,
 			IoInvalidDeviceRequest,
 			MuReadWrite,
@@ -119,7 +119,10 @@ bool EmuMuFormatPartition(xbox::dword_xt PartitionNumber)
 	// Previously, we deleted and re-created the folder, but that caused permission issues for some users
 	std::error_code er;
 	for (const auto& directoryEntry : std::filesystem::directory_iterator(PartitionPath, er)) {
-		if (!er) {
+		if (er) {
+			EmuLog(LOG_LEVEL::ERROR2, "%s", er.message().c_str());
+		}
+		else {
 			std::filesystem::remove_all(directoryEntry, er);
 		}
 	}
@@ -170,6 +173,7 @@ static void EmuMuPartitionSetup(xbox::dword_xt MuIndex)
 	xbox::ntstatus_xt result = xbox::IoCreateDevice(&xbox::MuDriverObject, sizeof(xbox::MU_EXTENSION), &xDeviceName, xbox::FILE_DEVICE_MEMORY_UNIT, FALSE, &MuDeviceObject);
 	EmuBugCheckInline(result);
 
+	// NOTE: below are incomplete reverse engineered, more research is needed to understand the initialization process.
 	MuDeviceObject->Flags |= 0x45; // TODO: What flags are these? Doesn't seem to match with ReactOS's info: https://github.com/reactos/reactos/blob/999345a4feaae1e74533c96fa2cdfa1bce50ec5f/sdk/include/xdk/iotypes.h
 
 	MuDeviceObject->AlignmentRequirement = 1;
