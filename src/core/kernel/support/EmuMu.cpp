@@ -150,11 +150,11 @@ static void EmuMuPartitionSetup(xbox::dword_xt MuIndex)
 	MuPath.HostDevicePath = g_MuBasePath + MuLetter;
 
 	bool succeeded{ true };
-	std::string partitionHeaderPath = MuPath.HostDevicePath + ".bin";
+	std::filesystem::path partitionHeaderPath = MuPath.HostDevicePath + ".bin";
 	if (!std::filesystem::exists(partitionHeaderPath)) {
 		CxbxCreatePartitionHeaderFile(partitionHeaderPath, MuIndex == 0);
 	}
-	MuPath.HostBinHandle = CreateFileA(partitionHeaderPath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+	MuPath.HostBinHandle = CreateFileW(partitionHeaderPath.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
 
 	// If this path is not a raw file partition, create the directory for it
 	std::error_code error; // We do not want filesystem to throw an exception on directory creation. Instead, listen for return value to fail.
