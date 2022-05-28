@@ -1391,6 +1391,8 @@ typedef struct _DRIVER_OBJECT
 	// IRP_MJ_INTERNAL_DEVICE_CONTROL
 	// IRP_MJ_???
 	// IRP_MJ_???
+	// TODO: Find out what unknown functions above are used for base on IO_STACK_LOCATION's Parameters.
+	//       Currently, it's too early to tell.
 } DRIVER_OBJECT, *PDRIVER_OBJECT;
 
 // ******************************************************************
@@ -2768,8 +2770,8 @@ typedef struct _IDE_CHANNEL_OBJECT
 } IDE_CHANNEL_OBJECT, *PIDE_CHANNEL_OBJECT;
 
 typedef struct _IO_STACK_LOCATION {
-	uchar_xt MajorFunction;    // 0x00
-	uchar_xt MinorFunction;    // 0x01
+	uchar_xt MajorFunction;    // 0x00 // TODO: Replace type to enum
+	uchar_xt MinorFunction;    // 0x01 // TODO: Replace type to enum
 	uchar_xt Flags;            // 0x02
 	uchar_xt Control;          // 0x03
 
