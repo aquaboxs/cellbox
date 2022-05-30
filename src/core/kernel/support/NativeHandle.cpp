@@ -58,6 +58,7 @@ std::unordered_map<xbox::PVOID, RegisteredObject> g_RegisteredPartitions;
 
 void StrHashDereference(const std::size_t& StrHash)
 {
+	// If string hash size is zero, skip it.
 	if (!StrHash) {
 		return;
 	}
@@ -68,7 +69,11 @@ void StrHashDereference(const std::size_t& StrHash)
 		if (!it->second.Counter) {
 			g_HashStrings.erase(it);
 		}
+		return;
 	}
+
+	// Should not be reachable. If it does, then need to find where extra deference occur and correct it.
+	assert(it != g_HashStrings.end());
 }
 
 void AttachStringToXboxObject(xbox::PVOID xobject, const std::string& string)
@@ -92,11 +97,17 @@ void AttachStringToXboxObject(xbox::PVOID xobject, const std::string& string)
 	std::size_t counter{};
 	const auto& it1 = g_RegisteredObjects.find(xobject);
 	if (it1 != g_RegisteredObjects.end()) {
+		// Dereference if previous string hash size is non-zero.
+		StrHashDereference(it1->second.StrHash);
+		// Bind string hash to xobject
 		it1->second.StrHash = StrHash;
 		counter++;
 	}
 	const auto& it2 = g_RegisteredPartitions.find(xobject);
 	if (it2 != g_RegisteredPartitions.end()) {
+		// Dereference if previous string hash size is non-zero.
+		StrHashDereference(it2->second.StrHash);
+		// Bind string hash to xobject
 		it2->second.StrHash = StrHash;
 		counter++;
 	}
@@ -289,7 +300,7 @@ static std::string DeviceObject2Str(xbox::PVOID xobject)
 		break;
 	}
 	default:
-		path = "\\unknown";
+		path = "$unknown";
 		break;
 	}
 
