@@ -262,8 +262,6 @@ static void chihiro_ide_interface_init(const char *rom_file,
     dinfo->bus = 0;
     dinfo->unit = 1;
     dinfo->refcount = 1;
-
-    bdrv_append(dinfo->bdrv, NULL, &error_fatal);
 #else
     printf("Chihiro IDE not yet implemented (please fix it)\n");
     assert(0);
