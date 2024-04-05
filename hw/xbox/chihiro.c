@@ -264,10 +264,7 @@ static void chihiro_ide_interface_init(const char *rom_file,
     dinfo->unit = 1;
     dinfo->refcount = 1;
 
-    assert(!bdrv_memory_open(dinfo->bdrv, interface_space,
-                             memory_region_size(interface)));
-
-    drive_append(dinfo);
+    bdrv_append(dinfo->bdrv, NULL, &error_fatal);
 #else
     printf("Chihiro IDE not yet implemented (please fix it)\n");
     assert(0);
