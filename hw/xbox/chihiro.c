@@ -257,8 +257,7 @@ static void chihiro_ide_interface_init(const char *rom_file,
     /* create the device */
     DriveInfo *dinfo;
     dinfo = g_malloc0(sizeof(*dinfo));
-    dinfo->id = g_strdup("chihiro-interface");
-    dinfo->bdrv = bdrv_new(dinfo->id);
+    dinfo->bdrv = g_strdup("chihiro-interface");
     dinfo->type = IF_IDE;
     dinfo->bus = 0;
     dinfo->unit = 1;
