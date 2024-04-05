@@ -26,10 +26,10 @@ jobs:
         configuration: ["Debug", "Release"]
         include:
         - configuration: Debug
-          build_param: --debug
+          build_param:
           artifact_name: cellbox-win-debug.zip
         - configuration: Release
-          build_param:
+          build_param: --release
           artifact_name: cellbox-win-release.zip
     steps:
     - name: Clone Tree
@@ -80,10 +80,10 @@ jobs:
         configuration: ["Debug", "Release"]
         include:
         - configuration: Debug
-          build_param: --debug
+          build_param:
           artifact_name: cellbox-ubuntu-debug.tgz
         - configuration: Release
-          build_param:
+          build_param: --release
           artifact_name: cellbox-ubuntu-release.tgz
     steps:
     - name: Clone Tree
@@ -130,10 +130,10 @@ jobs:
         configuration: ["Debug", "Release"]
         include:
         - configuration: Debug
-          build_param: --debug
+          build_param:
           artifact_name: cellbox-macos-debug.zip
         - configuration: Release
-          build_param:
+          build_param: --release
           artifact_name: cellbox-macos-release.zip
     steps:
     - name: Clone Tree
