@@ -29,11 +29,14 @@ typedef enum {
 
 struct DriveInfo {
     BlockInterfaceType type;
+    int id;
+    int bdrv;
     int bus;
     int unit;
     int auto_del;               /* see blockdev_mark_auto_del() */
     bool is_default;            /* Added by default_drive() ?  */
     int media_cd;
+    int refcount;
     QemuOpts *opts;
     bool locked;
     QTAILQ_ENTRY(DriveInfo) next;

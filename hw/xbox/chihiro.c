@@ -253,7 +253,7 @@ static void chihiro_ide_interface_init(const char *rom_file,
         close(fd);
     }
 
-#if 0 // FIXME
+#if 1 // FIXME
     /* create the device */
     DriveInfo *dinfo;
     dinfo = g_malloc0(sizeof(*dinfo));

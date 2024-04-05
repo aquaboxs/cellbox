@@ -43,3 +43,8 @@ jobs:
         ./build.sh ${{ env.BUILD_PARAM }}
         echo -e "\nCompiler Cache Stats:"
         ccache -s -c
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: ${{ matrix.artifact_name }}
