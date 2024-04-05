@@ -5,11 +5,11 @@ set -o pipefail # Will return the exit status of make if it fails
 
 package_windows() { # Script to prepare the windows exe
     mkdir -p dist
-    cp i386-softmmu/qemu-system-i386.exe dist/xqemu.exe
-    cp i386-softmmu/qemu-system-i386w.exe dist/xqemuw.exe
-    python3 ./get_deps.py dist/xqemu.exe dist
-    strip dist/xqemu.exe
-    strip dist/xqemuw.exe
+    cp i386-softmmu/qemu-system-i386.exe dist/cellbox.exe
+    cp i386-softmmu/qemu-system-i386w.exe dist/cellboxw.exe
+    python3 ./get_deps.py dist/cellbox.exe dist
+    strip dist/cellbox.exe
+    strip dist/cellboxw.exe
 }
 
 postbuild=''

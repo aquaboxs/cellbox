@@ -134,7 +134,7 @@ static void sdl_update_caption(struct sdl2_console *scon)
     char win_title[1024];
     char icon_title[1024];
     const char *status = "";
-    const char *project_name = "XQEMU";
+    const char *project_name = "CELLBOX";
     const char *hash_indicator = "Revision";
 
     if (!runstate_is_running()) {

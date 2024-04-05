@@ -441,6 +441,65 @@ static void nv2a_realize(PCIDevice *dev, Error **errp)
     pci_set_word(dev->config + PCI_SUBSYSTEM_VENDOR_ID, 0);
     pci_set_word(dev->config + PCI_SUBSYSTEM_ID, 0);
     dev->config[PCI_INTERRUPT_PIN] = 0x01;
+    dev->config[PCI_INTERRUPT_LINE] = 0x03;
+
+    pci_set_word(dev->config + PCI_COMMAND, 
+        PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER);
+
+    pci_set_word(dev->config + PCI_STATUS, 
+        PCI_STATUS_CAP_LIST | PCI_STATUS_66MHZ | PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
+
+    dev->config[0x0d] = 0xf8;
+
+    dev->config[0x34] = 0x60;
+
+    dev->config[0x44] = 0x02;
+    dev->config[0x45] = 0x00;
+    dev->config[0x46] = 0x20;
+    dev->config[0x47] = 0x00;
+
+    dev->config[0x48] = 0x17;
+    dev->config[0x49] = 0x00;
+    dev->config[0x4a] = 0x00;
+    dev->config[0x4b] = 0x1f;
+
+    dev->config[0x4c] = 0x14;
+    dev->config[0x4d] = 0x01;
+    dev->config[0x4e] = 0x00;
+    dev->config[0x4f] = 0x1f;
+
+    dev->config[0x50] = 0x00;
+    dev->config[0x51] = 0x00;
+    dev->config[0x52] = 0x00;
+    dev->config[0x53] = 0x00;
+
+    dev->config[0x54] = 0x01;
+    dev->config[0x55] = 0x00;
+    dev->config[0x56] = 0x00;
+    dev->config[0x57] = 0x00;
+
+    dev->config[0x58] = 0xce;
+    dev->config[0x59] = 0xd6;
+    dev->config[0x5a] = 0x23;
+    dev->config[0x5b] = 0x00;
+
+    dev->config[0x5c] = 0x0f;
+    dev->config[0x5d] = 0x00;
+    dev->config[0x5e] = 0x00;
+    dev->config[0x5f] = 0x00;
+
+    dev->config[0x60] = 0x01;
+    dev->config[0x61] = 0x44;
+    dev->config[0x62] = 0x02;
+    dev->config[0x63] = 0x00;
+
+    dev->config[0x80] = 0x65;
+    dev->config[0x81] = 0xd0;
+    dev->config[0x82] = 0x16;
+    dev->config[0x83] = 0x2b;
+
+    dev->config[PCI_MIN_GNT] = 0x05;
+    dev->config[PCI_MAX_LAT] = 0x01;
 
     d->pcrtc.start = 0;
 

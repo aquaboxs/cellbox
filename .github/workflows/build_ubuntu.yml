@@ -15,11 +15,11 @@ jobs:
         if "${{ matrix.configuration }}" == "Debug":
           print('Configuring for Debug')
           print('::set-env name=BUILD_PARAM::')
-          print('::set-env name=ARTIFACT_NAME::xqemu-debug')
+          print('::set-env name=ARTIFACT_NAME::cellbox-debug')
         else:
           print('Configuring for Release')
           print('::set-env name=BUILD_PARAM::--release')
-          print('::set-env name=ARTIFACT_NAME::xqemu-release')
+          print('::set-env name=ARTIFACT_NAME::cellbox-release')
     - name: Clone Tree
       uses: actions/checkout@v1
       with:
@@ -36,12 +36,12 @@ jobs:
       id: cache
       uses: actions/cache@v1
       with:
-        path: /tmp/xqemu-ccache
+        path: /tmp/cellbox-ccache
         key: cache-${{ runner.os }}-${{ matrix.configuration }}-${{ github.sha }}
         restore-keys: cache-${{ runner.os }}-${{ matrix.configuration }}-
     - name: Compile
       run: |
-        export CCACHE_DIR=/tmp/xqemu-ccache
+        export CCACHE_DIR=/tmp/cellbox-ccache
         export CCACHE_MAXSIZE=250M
         export PATH="/usr/lib/ccache:$PATH"
         ./build.sh ${{ env.BUILD_PARAM }}
