@@ -30,7 +30,7 @@ package_macos() {
 
     # Generate icon file
     mkdir -p cellbox.iconset
-    for r in 16 32 128 256 512; do cp ui/icons/cellbox_${r}x${r}.png cellbox.iconset/icon_${r}x${r}.png; done
+    for r in 16 32 128 256 512; do cp ui/icons/qemu_${r}x${r}.png cellbox.iconset/icon_${r}x${r}.png; done
     iconutil --convert icns --output dist/cellbox.app/Contents/Resources/cellbox.icns cellbox.iconset
 
     # Generate Info.plist file
