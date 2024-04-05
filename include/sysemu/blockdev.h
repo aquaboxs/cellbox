@@ -30,7 +30,7 @@ typedef enum {
 struct DriveInfo {
     BlockInterfaceType type;
     int id;
-    BlockDriverState bdrv;
+    BlockDriverState *bdrv;
     int bus;
     int unit;
     int auto_del;               /* see blockdev_mark_auto_del() */
