@@ -5,21 +5,18 @@ on: [push, pull_request]
 jobs:
   macOS:
     runs-on: macOS-latest
+    needs: Init
     strategy:
       matrix:
         configuration: ["Debug", "Release"]
+        include:
+        - configuration: Debug
+          build_param: --debug
+          artifact_name: cellbox-macos-debug.zip
+        - configuration: Release
+          build_param:
+          artifact_name: cellbox-macos-release.zip
     steps:
-    - name: Define Build Options
-      shell: python
-      run: |
-        if "${{ matrix.configuration }}" == "Debug":
-          print('Configuring for Debug')
-          print('::set-env name=BUILD_PARAM::')
-          print('::set-env name=ARTIFACT_NAME::cellbox-debug')
-        else:
-          print('Configuring for Release')
-          print('::set-env name=BUILD_PARAM::--release')
-          print('::set-env name=ARTIFACT_NAME::cellbox-release')
     - name: Clone Tree
       uses: actions/checkout@v1
       with:
@@ -50,3 +47,8 @@ jobs:
         ./build.sh ${{ env.BUILD_PARAM }}
         echo -e "\nCompiler Cache Stats:"
         ccache -s -c
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: ${{ matrix.artifact_name }}

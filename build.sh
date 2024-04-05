@@ -12,6 +12,72 @@ package_windows() { # Script to prepare the windows exe
     strip dist/cellboxw.exe
 }
 
+package_macos() {
+    #
+    # Create bundle
+    #
+    rm -rf dist
+
+    # Copy in executable
+    mkdir -p dist/cellbox.app/Contents/MacOS/
+    cp i386-softmmu/qemu-system-i386 dist/cellbox.app/Contents/MacOS/cellbox
+
+    # Copy in in executable dylib dependencies
+    mkdir -p dist/cellbox.app/Contents/Frameworks
+    dylibbundler -cd -of -b -x dist/cellbox.app/Contents/MacOS/cellbox \
+        -d dist/cellbox.app/Contents/Frameworks/ \
+        -p '@executable_path/../Frameworks/'
+
+    # Generate icon file
+    mkdir -p cellbox.iconset
+    for r in 16 32 128 256 512; do cp ui/icons/cellbox_${r}x${r}.png cellbox.iconset/icon_${r}x${r}.png; done
+    iconutil --convert icns --output dist/cellbox.app/Contents/Resources/cellbox.icns cellbox.iconset
+
+    # Generate Info.plist file
+    cat <<EOF > dist/cellbox.app/Contents/Info.plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>en</string>
+  <key>CFBundleExecutable</key>
+  <string>cellbox</string>
+  <key>CFBundleIconFile</key>
+  <string>cellbox.icns</string>
+  <key>CFBundleIdentifier</key>
+  <string>cellbox.app.0</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>6.0</string>
+  <key>CFBundleName</key>
+  <string>cellbox</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleShortVersionString</key>
+  <string>1</string>
+  <key>CFBundleSignature</key>
+  <string>cellbox</string>
+  <key>CFBundleVersion</key>
+  <string>1</string>
+  <key>LSApplicationCategoryType</key>
+  <string>public.app-category.games</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>10.6</string>
+  <key>NSPrincipalClass</key>
+  <string>NSApplication</string>
+  <key>NSHighResolutionCapable</key>
+  <true/>
+</dict>
+</plist>
+EOF
+}
+
+package_linux() {
+    rm -rf dist
+    mkdir -p dist
+    cp i386-softmmu/qemu-system-i386 dist/cellbox
+}
+
 postbuild=''
 debug_opts='--enable-debug'
 user_opts=''
@@ -44,6 +110,7 @@ case "$(uname -s)" in # adjust compilation option based on platform
         echo 'Compiling for Linux…'
         sys_cflags='-march=native -Wno-error=redundant-decls -Wno-error=unused-but-set-variable'
         sys_opts='--enable-kvm --disable-xen --disable-werror'
+        postbuild='package_linux'
         ;;
     Darwin)
         echo 'Compiling for MacOS…'
@@ -58,6 +125,7 @@ case "$(uname -s)" in # adjust compilation option based on platform
             echo 'Could not find a GNU compatible readlink. Please install coreutils with homebrew'
             exit -1
         fi
+        postbuild='package_macos'
         ;;
     CYGWIN*|MINGW*|MSYS*)
         echo 'Compiling for Windows…'
