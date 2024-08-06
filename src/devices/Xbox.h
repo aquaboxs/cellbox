@@ -28,7 +28,6 @@
 
 #include "PCIBus.h" // For PCIBus
 #include "SMBus.h" // For SMBus
-#include "devices\ram\RAMDevice.h" // For RAMDevice
 #include "MCPXDevice.h" // For MCPXDevice
 #include "SMCDevice.h" // For SMCDevice
 #include "EEPROMDevice.h" // For EEPROMDevice

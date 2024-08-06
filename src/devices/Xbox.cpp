@@ -36,7 +36,6 @@
 
 PCIBus* g_PCIBus;
 SMBus* g_SMBus;
-RAMDevice* g_RAM;
 MCPXDevice* g_MCPX;
 SMCDevice* g_SMC;
 EEPROMDevice* g_EEPROM;
@@ -152,7 +151,6 @@ void InitXboxHardware(HardwareModel hardwareModel)
 
 	// Create busses
 	g_PCIBus = new PCIBus();
-	g_RAM = new RAMDevice();
 	g_SMBus = new SMBus();
 
 	// Create devices
@@ -166,6 +164,8 @@ void InitXboxHardware(HardwareModel hardwareModel)
 	g_EEPROM = new EEPROMDevice();
 	g_NVNet = new NVNetDevice();
 	g_NV2A = new NV2ADevice();
+	g_NVAPU = new APUDevice();
+	g_AC97 = new AC97Device();
 	g_ADM1032 = new ADM1032Device();
 	g_USB0 = new USBDevice();
 
@@ -197,7 +197,7 @@ void InitXboxHardware(HardwareModel hardwareModel)
 	}
 
 	// Connect devices to PCI bus
-	g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(0, 3)), g_RAM);
+	//g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(0, 3)), g_RAM);
 	g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(1, 1)), g_SMBus);
 	g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(4, 0)), g_NVNet);
 	//g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(4, 1)), g_MCPX); // MCPX device ID = 0x0808 ?
