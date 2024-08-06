@@ -84,6 +84,12 @@ void USBDevice::Init()
 	// Taken from https://github.com/docbrown/vxb/wiki/Xbox-Hardware-Information
 	m_DeviceId = 0x01C2;
 	m_VendorId = PCI_VENDOR_ID_NVIDIA;
+	m_Command = 0x0006;
+	m_Status = 0x00B0;
+	m_RevisionId = 0xB1;
+	m_classId = 0x0C;
+	m_subClass = 0x03;
+	m_progIf = 0x10;
 
 	m_HostController = new OHCI(this);
 	m_PciPath = "pci.0:02.0";

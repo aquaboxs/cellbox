@@ -97,7 +97,7 @@ END
 
 IDD_INPUT_CFG DIALOGEX 0, 0, 265, 192
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Cxbx-Reloaded : Input Configuration"
+CAPTION "Cellbox : Input Configuration"
 FONT 8, "Verdana", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Xbox device configuration",IDC_DEVICE,13,10,240,103,WS_GROUP,WS_EX_CLIENTEDGE
@@ -401,7 +401,7 @@ END
 
 IDD_VIDEO_CFG DIALOGEX 0, 0, 259, 150
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Cxbx-Reloaded : Video Configuration"
+CAPTION "Cellbox : Video Configuration"
 FONT 8, "Verdana", 0, 0, 0x1
 BEGIN
     COMBOBOX        IDC_VC_DISPLAY_ADAPTER,76,12,173,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -423,7 +423,7 @@ END
 
 IDD_AUDIO_CFG DIALOGEX 0, 0, 259, 121
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Cxbx-Reloaded : Audio Configuration"
+CAPTION "Cellbox : Audio Configuration"
 FONT 8, "Verdana", 0, 0, 0x1
 BEGIN
     COMBOBOX        IDC_AC_AUDIO_ADAPTER,76,12,173,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -453,7 +453,7 @@ END
 
 IDD_EEPROM_CFG DIALOGEX 0, 0, 259, 279
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Cxbx-Reloaded : Eeprom Configuration"
+CAPTION "Cellbox : Eeprom Configuration"
 FONT 8, "Verdana", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_EE_CONFOUNDER,100,10,140,12
@@ -495,7 +495,7 @@ END
 
 IDD_LOGGING_CFG DIALOGEX 0, 0, 258, 366
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Cxbx-Reloaded : Logging Configuration"
+CAPTION "Cellbox : Logging Configuration"
 FONT 8, "Verdana", 0, 0, 0x1
 BEGIN
     COMBOBOX        IDC_EVENT_LV,57,9,50,10,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -581,7 +581,7 @@ END
 
 IDD_ABOUT DIALOGEX 0, 0, 310, 177
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About Cxbx-Reloaded"
+CAPTION "About Cellbox"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "",IDC_TAB1,"SysTabControl32",0x0,7,7,296,163
@@ -807,7 +807,6 @@ BEGIN
     END
     POPUP "&Help",                          65535,MFT_STRING,MFS_ENABLED
     BEGIN
-        MENUITEM "&Go To The Official Cxbx Web Site...", ID_HELP_HOMEPAGE,MFT_STRING,MFS_ENABLED
         MENUITEM "", -1, MFT_SEPARATOR
         MENUITEM "&About",                      ID_HELP_ABOUT,MFT_STRING,MFS_ENABLED
     END
@@ -821,10 +820,6 @@ END
 //
 // TXT
 //
-
-IDR_CONTRIBUTORS        TXT                     "..\\CONTRIBUTORS"
-
-IDR_COPYING             TXT                     "..\\COPYING"
 
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////

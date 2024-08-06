@@ -1189,8 +1189,14 @@ void NV2ADevice::Init()
 	r.Memory.address = 0xF0000000 >> 4;
 	RegisterBAR(1, g_SystemMaxMemory, r.value);
 	
-	m_DeviceId = 0x02A5;
+	m_DeviceId = 0x02A0;
 	m_VendorId = PCI_VENDOR_ID_NVIDIA;
+	m_Command = 0x0007;
+	m_Status = 0x02B0;
+	m_RevisionId = 0xA1;
+	m_classId = 0x03;
+	m_subClass = 0x00;
+	m_progIf = 0x00;
 
 	NV2AState *d = m_nv2a_state; // glue
 

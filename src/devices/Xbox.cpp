@@ -36,11 +36,14 @@
 
 PCIBus* g_PCIBus;
 SMBus* g_SMBus;
+RAMDevice* g_RAM;
 MCPXDevice* g_MCPX;
 SMCDevice* g_SMC;
 EEPROMDevice* g_EEPROM;
 NVNetDevice* g_NVNet;
 NV2ADevice* g_NV2A;
+AC97Device* g_AC97;
+APUDevice* g_NVAPU;
 ADM1032Device* g_ADM1032;
 USBDevice* g_USB0;
 MediaBoard* g_MediaBoard;
@@ -149,6 +152,7 @@ void InitXboxHardware(HardwareModel hardwareModel)
 
 	// Create busses
 	g_PCIBus = new PCIBus();
+	g_RAM = new RAMDevice();
 	g_SMBus = new SMBus();
 
 	// Create devices
@@ -193,11 +197,12 @@ void InitXboxHardware(HardwareModel hardwareModel)
 	}
 
 	// Connect devices to PCI bus
+	g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(0, 3)), g_RAM);
 	g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(1, 1)), g_SMBus);
 	g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(4, 0)), g_NVNet);
 	//g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(4, 1)), g_MCPX); // MCPX device ID = 0x0808 ?
-	//g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(5, 0)), g_NVAPU);
-	//g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(6, 0)), g_AC97);
+	g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(5, 0)), g_NVAPU);
+	g_PCIBus->ConnectDevice(PCI_DEVID(0, PCI_DEVFN(6, 0)), g_AC97);
 	g_PCIBus->ConnectDevice(PCI_DEVID(1, PCI_DEVFN(0, 0)), g_NV2A);
 	// ergo720: according to some research done by LukeUsher, only Xbox Alpha Kits have a two HCs configuration. This seems to also be confirmed by the xboxdevwiki,
 	// which states that it has a xircom PGPCI2(OPTI 82C861) 2 USB port PCI card -> 2 ports, not 4. Finally, I disassembled various xbe's and discovered that the number

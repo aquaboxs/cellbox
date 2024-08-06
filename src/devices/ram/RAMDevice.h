@@ -19,56 +19,30 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2018 Luke Usher <luke.usher@outlook.coM>
+// *  (c) 2018 Luke Usher <luke.usher@outlook.com>
 // *
 // *  All rights reserved
 // *
 // ******************************************************************
 
-#include <cstdio>
+#ifndef _RAMDEVICE_H_
+#define _RAMDEVICE_H_
 
-#include "AC97Device.h"
+#include "../PCIDevice.h"
+class RAMDevice : public PCIDevice {
+	public:
+		using PCIDevice::PCIDevice;
 
-void AC97Device::Init()
-{
-	PCIBarRegister r;
-	r.Raw.type = PCI_BAR_TYPE_MEMORY;
-	r.Memory.address = AC97_BASE >> 4;
-	RegisterBAR(0, AC97_SIZE, r.value);
+		// PCI Functions
+		void Init();
+		void Reset();
 
-	m_DeviceId = 0x01B1;
-	m_VendorId = PCI_VENDOR_ID_NVIDIA;
-	m_Command = 0x0007;
-	m_Status = 0x00B0;
-	m_RevisionId = 0xB1;
-	m_classId = 0x04;
-	m_subClass = 0x01;
-	m_progIf = 0x00;
-}
-	
-void AC97Device::Reset()
-{
+		uint32_t IORead(int barIndex, uint32_t addr, unsigned size = sizeof(uint8_t));
+		void IOWrite(int barIndex, uint32_t addr, uint32_t data, unsigned size = sizeof(uint8_t));
 
-}
+		uint32_t MMIORead(int barIndex, uint32_t addr, unsigned size);
+		void MMIOWrite(int barIndex, uint32_t addr, uint32_t value, unsigned size);
+	private:
+};
 
-uint32_t AC97Device::IORead(int barIndex, uint32_t addr, unsigned size)
-{
-	printf("AC97Device: Unimplemented IORead %X\n", addr);
-	return 0;
-}
-
-void AC97Device::IOWrite(int barIndex, uint32_t addr, uint32_t value, unsigned size)
-{
-	printf("AC97Device: Unimplemented IOWrite %X\n", addr);
-}
-
-uint32_t AC97Device::MMIORead(int barIndex, uint32_t addr, unsigned size)
-{
-	printf("AC97Device: Unimplemented MMIORead %X\n", addr);
-	return 0;
-}
-
-void AC97Device::MMIOWrite(int barIndex, uint32_t addr, uint32_t value, unsigned size)
-{
-	printf("AC97Device: Unimplemented MMIOWrite %X\n", addr);
-}
+#endif

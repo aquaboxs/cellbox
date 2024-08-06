@@ -511,6 +511,12 @@ void NVNetDevice::Init()
 
 	m_DeviceId = 0x01C3;
 	m_VendorId = PCI_VENDOR_ID_NVIDIA;
+	m_Command = 0x0007;
+	m_Status = 0x00B0;
+	m_RevisionId = 0xB1;
+	m_classId = 0x02;
+	m_subClass = 0x00;
+	m_progIf = 0x00;
 
 	memset(NvNetState.regs, 0, sizeof(NvNetState.regs));
 	NvNetState.rx_ring_index = 0;

@@ -52,10 +52,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	hActiveModule = hInstance; // == GetModuleHandle(NULL); // Points to GUI (Cxbx.exe) ImageBase
 	std::string tempStr;
 
-	// First detect if we are running on WoW64, if not, prevent Cxbx-Reloaded from starting
-	// Cxbx-Reloaded needs access to high memory, only exposed to WoW64.
+	// First detect if we are running on WoW64, if not, prevent Cellbox from starting
+	// Cellbox needs access to high memory, only exposed to WoW64.
 	if (!VerifyWow64()) {
-		PopupError(nullptr, "Cxbx-Reloaded can only run under WoW64;\nThis means either a 64-bit version of Windows or Wine with a 64-bit prefix.");
+		PopupError(nullptr, "Cellbox can only run under WoW64;\nThis means either a 64-bit version of Windows or Wine with a 64-bit prefix.");
 		return EXIT_FAILURE;
 	}
 
@@ -100,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     WndMain *MainWindow = new WndMain(hInstance);
 
 	// NOTE: CxbxrInitFilePaths must be initalize AFTER WndMain for data directory option from user.
-	/* Initialize Cxbx-Reloaded File Paths */
+	/* Initialize Cellbox File Paths */
 	CxbxrInitFilePaths();
 
     /*! wait for window to be created, or failure */

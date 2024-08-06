@@ -217,7 +217,7 @@ XboxDeviceState* Hub::ClassInitFn()
 	m_HubState = new USBHubState();
 	XboxDeviceState* dev = &m_HubState->dev;
 
-	dev->ProductDesc = "Cxbx-Reloaded USB Hub";
+	dev->ProductDesc = "Cellbox USB Hub";
 	QLIST_INIT(&dev->Strings);
 	dev->klass = m_pPeripheralFuncStruct;
 
@@ -285,8 +285,8 @@ int Hub::UsbHub_Initfn(XboxDeviceState* dev)
 	int i;
 
 	m_UsbDev->USB_CreateSerial(dev, std::string("314159"));
-	m_UsbDev->USBDesc_SetString(dev, STR_MANUFACTURER, std::string("Cxbx-Reloaded"));
-	m_UsbDev->USBDesc_SetString(dev, STR_PRODUCT, std::string("Cxbx-Reloaded USB Hub"));
+	m_UsbDev->USBDesc_SetString(dev, STR_MANUFACTURER, std::string("Cellbox"));
+	m_UsbDev->USBDesc_SetString(dev, STR_PRODUCT, std::string("Cellbox USB Hub"));
 	m_UsbDev->USBDesc_Init(dev);
 	m_HubState->intr = m_UsbDev->USB_GetEP(dev, USB_TOKEN_IN, 1);
 

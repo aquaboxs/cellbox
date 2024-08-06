@@ -315,7 +315,7 @@ typedef struct PGRAPHState {
 	GLuint gl_inline_array_buffer;
 
 	unsigned int inline_elements_length;
-	uint16_t inline_elements[NV2A_MAX_BATCH_LENGTH]; // Cxbx-Reloaded TODO : Restore uint32_t once HLE_draw_inline_elements can using that
+	uint16_t inline_elements[NV2A_MAX_BATCH_LENGTH]; // Cellbox TODO : Restore uint32_t once HLE_draw_inline_elements can using that
 
 	unsigned int inline_buffer_length;
 

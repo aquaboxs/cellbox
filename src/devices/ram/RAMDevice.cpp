@@ -27,48 +27,45 @@
 
 #include <cstdio>
 
-#include "AC97Device.h"
+#include "RAMDevice.h"
 
-void AC97Device::Init()
+void RAMDevice::Init()
 {
 	PCIBarRegister r;
-	r.Raw.type = PCI_BAR_TYPE_MEMORY;
-	r.Memory.address = AC97_BASE >> 4;
-	RegisterBAR(0, AC97_SIZE, r.value);
 
-	m_DeviceId = 0x01B1;
+	m_DeviceId = 0x02A6;
 	m_VendorId = PCI_VENDOR_ID_NVIDIA;
-	m_Command = 0x0007;
-	m_Status = 0x00B0;
-	m_RevisionId = 0xB1;
-	m_classId = 0x04;
-	m_subClass = 0x01;
+	m_Command = 0x0000;
+	m_Status = 0x0020;
+	m_RevisionId = 0xA1;
+	m_classId = 0x05;
+	m_subClass = 0x00;
 	m_progIf = 0x00;
 }
 	
-void AC97Device::Reset()
+void RAMDevice::Reset()
 {
 
 }
 
-uint32_t AC97Device::IORead(int barIndex, uint32_t addr, unsigned size)
+uint32_t RAMDevice::IORead(int barIndex, uint32_t addr, unsigned size)
 {
-	printf("AC97Device: Unimplemented IORead %X\n", addr);
+	printf("RAMDevice: Unimplemented IORead %X\n", addr);
 	return 0;
 }
 
-void AC97Device::IOWrite(int barIndex, uint32_t addr, uint32_t value, unsigned size)
+void RAMDevice::IOWrite(int barIndex, uint32_t addr, uint32_t value, unsigned size)
 {
-	printf("AC97Device: Unimplemented IOWrite %X\n", addr);
+	printf("RAMDevice: Unimplemented IOWrite %X\n", addr);
 }
 
-uint32_t AC97Device::MMIORead(int barIndex, uint32_t addr, unsigned size)
+uint32_t RAMDevice::MMIORead(int barIndex, uint32_t addr, unsigned size)
 {
-	printf("AC97Device: Unimplemented MMIORead %X\n", addr);
+	printf("RAMDevice: Unimplemented MMIORead %X\n", addr);
 	return 0;
 }
 
-void AC97Device::MMIOWrite(int barIndex, uint32_t addr, uint32_t value, unsigned size)
+void RAMDevice::MMIOWrite(int barIndex, uint32_t addr, uint32_t value, unsigned size)
 {
-	printf("AC97Device: Unimplemented MMIOWrite %X\n", addr);
+	printf("RAMDevice: Unimplemented MMIOWrite %X\n", addr);
 }

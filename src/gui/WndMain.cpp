@@ -209,7 +209,7 @@ WndMain::WndMain(HINSTANCE x_hInstance) :
 	// initialize members
 	{
 		m_classname = "WndMain";
-		m_wndname   = "Cxbx-Reloaded " + std::string(CxbxrHashBuild);
+		m_wndname   = "Cellbox " + std::string(CxbxrHashBuild);
 	}
 
 	// load configuration from settings file
@@ -491,7 +491,7 @@ LRESULT CALLBACK WndMain::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
                 if(m_Xbe != nullptr && m_Xbe->HasError())
                     sprintf(buffer, "%s Loaded!", m_Xbe->m_szAsciiTitle);
                 else
-                    sprintf(buffer, "%s", "Disclaimer: Cxbx-Reloaded has no affiliation with Microsoft");
+                    sprintf(buffer, "%s", "Disclaimer: Cellbox has no affiliation with Microsoft (based on Cxbx-Reloaded)");
 
                 RECT rect = {0, m_h-15-5, m_w-100-4-69, m_h-5};
 
@@ -992,7 +992,7 @@ LRESULT CALLBACK WndMain::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 				{
 					SHGetPathFromIDList(lpItem, szDir);
 
-					// -14 is for \\Cxbx-Reloaded string to be include later down below.
+					// -14 is for \\Cellbox string to be include later down below.
 					size_t szLen = strnlen(szDir, MAX_PATH - 14);
 					if (szLen == 0) {
 						PopupError(hwnd, "You've selected an invalid folder... Go back and try again.");
@@ -1003,7 +1003,7 @@ LRESULT CALLBACK WndMain::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 						break;
 					}
 
-					std::string szDirTemp = std::string(szDir) + std::string("\\Cxbx-Reloaded");
+					std::string szDirTemp = std::string(szDir) + std::string("\\Cellbox");
 
 					if (szDirTemp.size() > MAX_PATH) {
 						PopupError(hwnd, "Directory path is too long. Go back and choose a shorter path.");
@@ -1081,11 +1081,11 @@ LRESULT CALLBACK WndMain::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 			case ID_SETTINGS_INITIALIZE:
 			{
 				PopupReturn ret = PopupWarningEx(m_hwnd, PopupButtons::YesNo, PopupReturn::No,
-					"Warning: This will reset all Cxbx-Reloaded settings to their default values.\nAre you sure you want to proceed?", "Cxbx-Reloaded");
+					"Warning: This will reset all Cellbox settings to their default values.\nAre you sure you want to proceed?", "Cellbox");
 
 				if (ret == PopupReturn::Yes) {
 					InitializeSettings();
-					PopupInfo(m_hwnd, "Cxbx-Reloaded has been initialized and will now close.");
+					PopupInfo(m_hwnd, "Cellbox has been initialized and will now close.");
 					SendMessage(hwnd, WM_CLOSE, 0, 0);
 				}
 			}
@@ -1299,7 +1299,7 @@ LRESULT CALLBACK WndMain::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
             break;
 
             case ID_HELP_HOMEPAGE:
-                ShellExecute(NULL, "open", "https://github.com/Cxbx-Reloaded/Cxbx-Reloaded", nullptr, nullptr, SW_SHOWNORMAL);
+                ShellExecute(NULL, "open", "https://github.com/aquaboxs/cellbox", nullptr, nullptr, SW_SHOWNORMAL);
                 break;
 
             }
@@ -1765,7 +1765,7 @@ void WndMain::UpdateDebugConsoles()
 			if (AllocConsole()) {
 				std::freopen("CONOUT$", "wt", stdout);
 
-				SetConsoleTitle("Cxbx-Reloaded : Debug Console");
+				SetConsoleTitle("Cellbox : Debug Console");
 
 				SetConsoleTextAttribute(stdHandle, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
 
@@ -1858,7 +1858,7 @@ void WndMain::UpdateCaption()
 {
 	char AsciiTitle[MAX_PATH];
 
-	int i = sprintf(AsciiTitle, "Cxbx-Reloaded %s", CxbxrHashBuild);
+	int i = sprintf(AsciiTitle, "Cellbox %s", CxbxrHashBuild);
 	if (m_Xbe != nullptr) {
 		i += sprintf(AsciiTitle + i, " : %s v%d.%d (%s)", FormatTitleId(m_Xbe->m_Certificate.dwTitleId).c_str(), m_Xbe->GetDiscVersion(), m_Xbe->GetPatchVersion(), m_Xbe->m_szAsciiTitle);
 
@@ -1946,7 +1946,7 @@ void WndMain::OpenXbe(const char *x_filename)
 
     if(m_Xbe->HasError())
     {
-		// Save the error message as a separate string. This fixes a corruption in the message "Disclaimer: Cxbx-Reloaded has no
+		// Save the error message as a separate string. This fixes a corruption in the message "Disclaimer: Cellbox has no
 		// affiliation with Microsoft" that would occur if loading an xbe and then launching the dashboard with the "Open dashboard"
 		// option but it's not installed
 

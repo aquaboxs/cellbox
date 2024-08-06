@@ -28,6 +28,7 @@
 
 #include "PCIBus.h" // For PCIBus
 #include "SMBus.h" // For SMBus
+#include "devices\ram\RAMDevice.h" // For RAMDevice
 #include "MCPXDevice.h" // For MCPXDevice
 #include "SMCDevice.h" // For SMCDevice
 #include "EEPROMDevice.h" // For EEPROMDevice
@@ -35,6 +36,8 @@
 #include "ADM1032Device.h" // For ADM1032
 #include "devices\video\nv2a.h" // For NV2ADevice
 #include "Usb\USBDevice.h" // For USBDevice
+#include "audio\APUDevice.h"
+#include "audio\AC97Device.h"
 #include "chihiro\MediaBoard.h"
 
 #define SMBUS_ADDRESS_MCPX 0x10 // = Write; Read = 0x11

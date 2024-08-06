@@ -31,6 +31,8 @@
 #include <cstdint>
 #include <map>
 
+#include ".\pci_regs.h"
+
 #define	PCI_BAR_TYPE_IO			1
 #define PCI_BAR_TYPE_MEMORY		0
 
@@ -92,16 +94,16 @@ typedef struct {
 			uint32_t type : 1;
 			uint32_t reserved : 1;
 			uint32_t address : 30;
-		}IO;	
+		}IO;
 
 		struct {
 			uint32_t type : 1;
 			uint32_t other : 31;
-		}Raw ;
+		}Raw;
 
 		uint32_t value;
 	};
-	
+
 } PCIBarRegister;
 
 typedef struct {
@@ -124,7 +126,7 @@ public:
 	// PCI Device Implementation
 public:
 	bool GetIOBar(uint32_t port, PCIBar* bar);
-	bool GetMMIOBar(uint32_t addr, PCIBar * bar);
+	bool GetMMIOBar(uint32_t addr, PCIBar* bar);
 	bool RegisterBAR(int index, uint32_t size, uint32_t defaultValue);
 	bool UpdateBAR(int index, uint32_t newValue);
 	uint32_t ReadConfigRegister(uint32_t reg);
@@ -133,12 +135,18 @@ protected:
 	std::map<int, PCIBar> m_BAR;
 	uint16_t m_DeviceId;
 	uint16_t m_VendorId;
-/* Unused?
-private:
+	uint8_t m_RevisionId;
+	uint8_t m_subClass;
+	uint8_t m_classId;
+	uint8_t m_progIf;
+	uint16_t m_Command;
+	uint16_t m_Status;
+	/* Unused?
+	private:
 
-	static uint64_t MMIOBarRead(struct uc_struct* uc, void* pBar, uint64_t addr, unsigned size);
-	static void MMIOBarWrite(struct uc_struct* uc, void* pBar, uint64_t addr, uint64_t value, unsigned size);
-*/
+		static uint64_t MMIOBarRead(struct uc_struct* uc, void* pBar, uint64_t addr, unsigned size);
+		static void MMIOBarWrite(struct uc_struct* uc, void* pBar, uint64_t addr, uint64_t value, unsigned size);
+	*/
 };
 
 #endif

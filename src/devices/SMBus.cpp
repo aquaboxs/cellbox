@@ -38,6 +38,12 @@ void SMBus::Init()
 
 	m_DeviceId = 0x01B4;
 	m_VendorId = PCI_VENDOR_ID_NVIDIA;
+	m_Command = 0x0001;
+	m_Status = 0x00B0;
+	m_RevisionId = 0xB1;
+	m_classId = 0x0C;
+	m_subClass = 0x05;
+	m_progIf = 0x00;
 }
 	
 void SMBus::Reset()
