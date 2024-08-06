@@ -92,10 +92,6 @@ uint32_t PCIDevice::ReadConfigRegister(uint32_t reg)
 			return m_subClass | (m_classId << 8);
 		case PCI_CLASS_PROG:
 			return m_progIf;
-		case PCI_COMMAND:
-			return (m_Command << 16);
-		case PCI_STATUS:
-			return (m_Status << 16);
 		case PCI_CONFIG_BAR_0:
 		case PCI_CONFIG_BAR_1:
 		case PCI_CONFIG_BAR_2:

@@ -35,8 +35,6 @@ void RAMDevice::Init()
 
 	m_DeviceId = 0x02A6;
 	m_VendorId = PCI_VENDOR_ID_NVIDIA;
-	m_Command = 0x0000;
-	m_Status = 0x0020;
 	m_RevisionId = 0xA1;
 	m_classId = 0x05;
 	m_subClass = 0x00;
