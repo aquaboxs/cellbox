@@ -47,7 +47,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: matrix.configuration == 'Release'
         with:
-          name: CxbxReloaded-${{ matrix.configuration }}-VS${{ matrix.vsver }}
+          name: Cellbox-${{ matrix.configuration }}-VS${{ matrix.vsver }}
           path: artifacts/bin
           if-no-files-found: error
 
@@ -55,7 +55,7 @@ jobs:
     if: |
       github.event.action != 'pull_request' &&
       github.ref == 'refs/heads/master'     &&
-      github.repository == 'Cxbx-Reloaded/Cxbx-Reloaded'
+      github.repository == 'aquaboxs/cellbox'
     needs: build-windows
     runs-on: ubuntu-latest
     steps:
